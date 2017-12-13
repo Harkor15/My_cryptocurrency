@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My cryptocurrency</string>
+    <string name="my_cryptos">Moje kryptowaluty</string>
+    <string name="Settings">Ustawienia</string>
+    <string name="add_inf">Szczegóły</string>
+    <string name="refresh">Odśwież</string>
+    <string name="back">WRÓĆ</string>
+    <string name="pickCurr">Wybierz walutę</string>
+    <string name="backAndSave">Zapisz i wróć</string>
+    <string name="myCrypto">Moje kryptowaluty</string>
+</resources>
