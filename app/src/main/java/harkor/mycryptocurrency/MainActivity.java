@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         Intent settingss= new Intent(this,settings.class);
         startActivity(settingss);
     }
+    public void myCryptooo(View view){
+        Intent myCryptoo= new Intent(this,myCrypto.class);
+        startActivity(myCryptoo);
+    }
     public void timerSet(){
         final TextView time=(TextView) findViewById(R.id.time);
         Date now = new Date();
