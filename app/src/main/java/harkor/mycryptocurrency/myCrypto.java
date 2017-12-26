@@ -53,16 +53,24 @@ public class myCrypto extends AppCompatActivity {
        sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
        jsonString=sharedPreferences.getString("jsonString","{\n" +
                "       \"cryptoList\":[\n" +
-               "       {\"crypto\":\"BTC\",\"amount\":0.20,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-               "       {\"crypto\":\"BTC\",\"amount\":0.10,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-               "       {\"crypto\":\"LSK\",\"amount\":5.00,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
+               "       {\"crypto\":\"BTC\",\"amount\":0.01448812,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"SAFEX\",\"amount\":164.67,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"IOTA\",\"amount\":0.57,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"ADA\",\"amount\":58.76,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"XVG\",\"amount\":110.3,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"BCC\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
                "       ]\n" +
                "}");
        /*
 {
        "cryptoList":[
-       {"crypto":"BTC","amount":0.2,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
-       {"crypto":"BTC","amount":0.1,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"BTC","amount":0.01448812,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"SAFEX","amount":164.67,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"IOTA","amount":0.57,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"ADA","amount":58.76,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"XVG","amount":110.3,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
+       {"crypto":"BCC","amount":0.00409767,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0},
        {"crypto":"LSK","amount":5.0,"date":"23-12-2017","ePrice":20.0,"uPrice":21.0,"pPrice":80.0}
        ]
 }
