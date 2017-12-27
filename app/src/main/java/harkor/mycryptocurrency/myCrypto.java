@@ -58,7 +58,7 @@ public class myCrypto extends AppCompatActivity {
                "       {\"crypto\":\"IOTA\",\"amount\":0.57,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                "       {\"crypto\":\"ADA\",\"amount\":58.76,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                "       {\"crypto\":\"XVG\",\"amount\":110.3,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-               "       {\"crypto\":\"BCC\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+               "       {\"crypto\":\"BCH\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
                "       ]\n" +
                "}");

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +37,7 @@ import static java.lang.Double.isNaN;
 import static java.lang.Double.parseDouble;
 
 public class MainActivity extends AppCompatActivity {
+    double myMoneyUSD=0,myMoneyEUR=0,myMoneyPLN=0;
 
     String jsonString;
     LinkedList<Integer> idList=new LinkedList<>();
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     LinkedList<Double>ePriceList=new LinkedList<>();
     LinkedList<Double>uPriceList=new LinkedList<>();
     LinkedList<Double>pPriceList=new LinkedList<>();
-    double myMoneyUSD=0,myMoneyEUR=0,myMoneyPLN=0;
+
     public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
         SharedPreferences sharedPreferences;
         sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
@@ -55,20 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 "       {\"crypto\":\"IOTA\",\"amount\":0.57,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                 "       {\"crypto\":\"ADA\",\"amount\":58.76,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                 "       {\"crypto\":\"XVG\",\"amount\":110.3,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"BCC\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
+                "       {\"crypto\":\"BCH\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
                 "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
                 "       ]\n" +
                 "}");
-
-
-
-
-
-
-
-
-
-
 
         if(jsonString=="EMPTY"){
         Log.d("SHARED: ","EMPTY");
@@ -90,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("SHARED: ","OK");
         }
     }
-
     public void settingsss(View view){
         Intent settingss= new Intent(this,settings.class);
         startActivity(settingss);
@@ -106,9 +98,28 @@ public class MainActivity extends AppCompatActivity {
         String formattedTime = sdf.format(now);
         time.setText(formattedTime);
     }
-    //String price=null;
-    public void checkPrice(String crypto, final String currency){
-
+    public void setPrice(){
+        final TextView ammount=(TextView) findViewById(R.id.ammount);
+        SharedPreferences sharedPref;
+        sharedPref=getSharedPreferences("harkor.mycryptocurrency",Context.MODE_PRIVATE);
+        String currency=sharedPref.getString("currency","USD");
+        DecimalFormat decim = new DecimalFormat("##.##");
+        String showStr;
+        Log.d("ActualCurr: ",currency);
+        if(currency.equalsIgnoreCase("EUR")){ //FOR EUR
+            showStr=String.valueOf(decim.format(myMoneyEUR))+"€";
+            Log.d("Curr: ","EUR");
+        }else if(currency.equalsIgnoreCase("USD")){ //FOR USD
+            showStr=String.valueOf(decim.format(myMoneyUSD))+"$";
+            Log.d("Curr: ","USD");
+        }else{//FOR PLN
+            showStr=String.valueOf(decim.format(myMoneyPLN))+"zł";
+            Log.d("Curr: ","PLN");
+        }
+        ammount.setText(showStr );
+    }
+    public void checkPrice(){
+        myMoneyUSD=0;myMoneyEUR=0;myMoneyPLN=0;
         String url="https://min-api.cryptocompare.com/data/pricemulti?fsyms=";
         for(int i=0;i<nameList.size();i++){
             url+=nameList.get(i);
@@ -124,37 +135,17 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jsonObj;
                         try {
                             jsonObj = new JSONObject(response);
-                            //double tempPrice=0;
                             for(int i=0;i<jsonObj.length();i++){
-                                //JSONArray jsonArray=jsonObj.getJSONArray(nameList.get(i));
                                 JSONObject jsonObject=jsonObj.getJSONObject(nameList.get(i));
-                                /*
-                                if(currency=="EUR"){ //FOR EUR
-                                    tempPrice=(double) jsonObject.get(0);
-                                }else if(currency=="USD"){ //FOR USD
-                                    tempPrice=(double) jsonObject.get(1);
-                                }else{//FOR PLN
-                                    tempPrice=(double) jsonObject.get(2);
-                                }
-                                */
                                 double kEUR =jsonObject.getDouble("EUR");
                                 double kUSD =jsonObject.getDouble("USD");
                                 double kPLN =jsonObject.getDouble("PLN");
                                 double tempAmount= amountList.get(i);
-                                double tempSum=kPLN*tempAmount;
-                                myMoneyPLN+=tempSum;
+                                myMoneyPLN+=kPLN*tempAmount;
+                                myMoneyUSD+=kUSD*tempAmount;
+                                myMoneyEUR+=kEUR*tempAmount;
                             }
-                            ammount.setText(String.valueOf(myMoneyPLN));
-
-
-
-
-                            //price =jsonObj.getString(currency);
-                            //Log.d("JSON","price: "+price);
-                            //double priced=parseDouble(price);
-                            //String show = String.valueOf(priced)+" "+currency;
-                            //ammount.setText(show);
-
+                            setPrice();
                             timerSet();
                         } catch (JSONException e) {
                             ammount.setText("Error");
@@ -169,31 +160,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
-        /*
-        Log.d("JSON2","price: "+price);
-        if(price==null){
-            Log.d("Check price ressult:","Price NULL");
-            return NaN;
-        }else{
-            double priced=parseDouble(price);
-            Log.d("Check price ressult:","price git:"+price);
-            return  priced;
-        }
-        */
-
     }
-
-
-
+    public void refresh(View view){
+        checkPrice();
+        Toast.makeText(getApplicationContext(),"REFRESH!",Toast.LENGTH_SHORT).show();
+    }
 
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPref;
-        sharedPref=getSharedPreferences("harkor.mycryptocurrency",Context.MODE_PRIVATE);
-        final String currency=sharedPref.getString("currency","USD");
+
         //String url="https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms="+currency;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -202,67 +180,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-        checkPrice("BTC",currency);
-       /* if(prc!=NaN){ // WE HAVE DATA FROM URL
-
-
-
-        }
-        else{ //ERROR WHEN ACCESING TO URL
-
-        }
-        */
-
-
-
-
-
- /*       final RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
-                    String price="Error";
-                    @Override
-                    public void onResponse(String response){
-                        JSONObject jsonObj = null;
-                        try {
-                            jsonObj = new JSONObject(response);
-                            price=jsonObj.getString(currency);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        //JSONObject c = contacts.getJSONObject(1);
-
-                        double priced=parseDouble(price);
-                        String show = String.valueOf(priced)+" "+currency;
-                       // String show=toString(priced);//+" "+currency;
-                        ammount.setText(show);
-
-                        ////////// TIME
-                        //Date currentTime = Calendar.getInstance().getTime();
-                        //int showTime=
-                        /*Calendar rightNow = Calendar.getInstance();
-
-                        String currentTime=String.valueOf(rightNow.HOUR_OF_DAY)+":"+
-                                String.valueOf(Calendar.MINUTE)+" "+
-                                String.valueOf(Calendar.YEAR);
-
-
-                        timerSet();
-
-
-                    }
-                }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                ammount.setText("ERROR");
-                error.printStackTrace();
-                queue.stop();
-            }
-        });
-        queue.add(stringRequest);*/
+        checkPrice();
     }
-
-
 }
