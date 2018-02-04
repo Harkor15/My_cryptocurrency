@@ -48,6 +48,34 @@ public class MainActivity extends AppCompatActivity {
     //LinkedList<Double>uPriceList=new LinkedList<>();
     //LinkedList<Double>pPriceList=new LinkedList<>();
 
+    public void sharedAdd(String tag,Double amo){
+        int len=nameList.size();
+        if(len==0){
+            idList.add(0);
+            nameList.add(tag);
+            amountList.add(amo);
+        }else{
+            int poz=sharedAdd2(tag);
+            if(poz<0){
+                idList.add(len);
+                nameList.add(tag);
+                amountList.add(amo);
+            }else{
+                Double tmp=amountList.get(poz);
+                tmp+=amo;
+                amountList.set(poz,tmp);
+            }
+        }
+    }
+    public int sharedAdd2(String tag){
+        int len=nameList.size();
+        for(int i=0;i<len;i++){
+            if(nameList.get(i).equals(tag)){
+            return i;
+            }
+        }
+        return -1;
+    }
     public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
         SharedPreferences sharedPreferences;
         sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
@@ -71,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject cryptoObj = jsonArray.getJSONObject(i);
                 /////////////////////////////////////
-                idList.add(i);
-
-                nameList.add(cryptoObj.optString("crypto"));
+                sharedAdd(cryptoObj.optString("crypto"),cryptoObj.optDouble("amount"));
+                //idList.add(i);
+                //nameList.add(cryptoObj.optString("crypto"));
                 //Log.d("Crypto name: ", cryptoObj.optString("crypto"));
-                amountList.add(cryptoObj.optDouble("amount"));
+                //amountList.add(cryptoObj.optDouble("amount"));
                 //dateList.add(cryptoObj.optString("date"));
                 //ePriceList.add(cryptoObj.optDouble("ePrice"));
                 //uPriceList.add(cryptoObj.optDouble("uPrice"));
