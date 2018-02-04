@@ -8,4 +8,17 @@
     <string name="pickCurr">Wybierz walutę</string>
     <string name="backAndSave">Zapisz i wróć</string>
     <string name="myCrypto">Moje kryptowaluty</string>
+    <string name="sureDel">Czy napewno usunąć?</string>
+    <string name="yes">tak</string>
+    <string name="no">nie</string>
+    <string name="addNew">Dodaj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="ok">OK</string>
+    <string name="addCryptoTitle">Dodaj nową kryptowalutę</string>
+    <string name="amount">Ilość</string>
+    <string name="errorDouble">Podaj poprawną liczbę!</string>
+    <string name="checkTag">Sprawdź nazwę kryptowaluty!</string>
+    <string name="checkConn">Sprawdź połączenie internetowe!</string>
+    <string name="errorJSON">Coś posżło nie tak z JSON\'em!</string>
+    <string name="noData">Dodaj swoje kryptowaluty</string>
 </resources>

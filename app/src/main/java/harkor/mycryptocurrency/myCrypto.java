@@ -1,54 +1,139 @@
 package harkor.mycryptocurrency;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+
 
 public class myCrypto extends AppCompatActivity {
     String jsonString;
-    LinkedList<Integer>idList=new LinkedList<>();
-    LinkedList<String>nameList=new LinkedList<>();
-    LinkedList<Double>amountList=new LinkedList<>();
-    LinkedList<String>dateList=new LinkedList<>();
-    LinkedList<Double>ePriceList=new LinkedList<>();
-    LinkedList<Double>uPriceList=new LinkedList<>();
-    LinkedList<Double>pPriceList=new LinkedList<>();
+    Context context;
+    LinkedList<Integer> idList = new LinkedList<>();
+    LinkedList<String> nameList = new LinkedList<>();
+    LinkedList<Double> amountList = new LinkedList<>();
+    LinkedList<String> dateList = new LinkedList<>();
+    LinkedList<Double> ePriceList = new LinkedList<>();
+    LinkedList<Double> uPriceList = new LinkedList<>();
+    LinkedList<Double> pPriceList = new LinkedList<>();
 
-   /* public void btn(View v){
+    public void addNewCrypto(final String tag,final double amount) {
+        //wyslij zapytanie do serwera
+        String url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=" + tag + "&tsyms=EUR,USD,PLN";
+        Log.d("url",url);
+        final RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonObject;
+                        Log.d("Mamy objekt!","TRUE!");
 
-        idList.remove(1);
-        nameList.remove(1);
-        amountList.remove(1);
+                        try {
+                            jsonObject = new JSONObject(response);
+                            Log.d("WCZYTANO NOWE KRYPTO: ",""+jsonObject.length()); //7 to błąd 1-to dobrze
+                            Log.d("WCZYTANO NOWE KRYPTO: ",response);
+                            if(jsonObject.length()==1){
+                                //Jest ok dodajemy
+                                JSONObject jsonObj=jsonObject.getJSONObject(tag);
+                                double eur =jsonObj.getDouble("EUR");
+                                double usd =jsonObj.getDouble("USD");
+                                double pln =jsonObj.getDouble("PLN");
+                                addNewFinally(tag,amount,eur,usd,pln);
+                            }else{
+                                //Jest źle
+                                Toast.makeText(myCrypto.this,R.string.checkTag,Toast.LENGTH_SHORT).show();
+                            }
+                            //Biore się za rozkodowanie JSONA i wpisanie go do shared ale to jutro bo dzisiaj już do spania... ^_^
 
-       // private OnClickListener onItemDeleteClickListener = new OnClickListener() {
-           // public void onClick(View v) {
-                //int position = (Integer) v.getTag();
-                //showToast(„Delete: ” + (position+1) + ” pozycja”);
-        //Toast.makeText(getApplicationContext(),"SIZE: "+idList.size()+"Pozycja: "+position,Toast.LENGTH_SHORT).show();
 
-    }*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("WCZYTANO NOWE KRYPTO: ","NIE!");
+                            Toast.makeText(myCrypto.this,R.string.errorJSON,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                queue.stop();
+                Log.d("WCZYTANO NOWE KRYPTO: ","ERROR!");
+                /// brak internetu
+                Toast.makeText(myCrypto.this,R.string.checkConn,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Log.d("do boju"," wymaszerować");
+        queue.add(stringRequest);
+        //queue.stop();
+
+        //odśwież stronkę... ;) i jak ogarniesz jak odświerzać to dodaj też do usuwania.. ;)
+    }
+
+
+
+
+
+    public void addNewFinally(String tag,Double amount,Double eP,Double uP,Double pP){
+        //Toast.makeText(myCrypto.this,tag+": "+amount+" "+eP+" €, "+uP+"$, "+pP+" zł",Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPref;
+        sharedPref=getSharedPreferences("harkor.myCrypto",Context.MODE_PRIVATE);
+        String myShared=sharedPref.getString("jsonString","{\"cryptoList\":[]}");//   {"cryptoList":[]}  //To pusty string
+        String newCrypto="";
+        if(!myShared.equals("{\"cryptoList\":[]}")){
+            newCrypto=",";
+        }
+        Log.d("SHARE",myShared);
+        //Log.d("SHARE.length()",""+myShared.length());
+        myShared=myShared.substring(0,myShared.length()-2); //]}   wywalam potem dodam.
+        Log.d("SHARE",myShared);
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        String formattedTime = sdf.format(now);
+        //,{"crypto":"SAFEX","amount":164.67,"date":"23-12-2017","ePrice":15000.0,"uPrice":16000.0,"pPrice":60000.0} WZÓR
+
+        newCrypto+="{\"crypto\":\""+tag+"\",\"amount\":"+amount+",\"date\":\""+formattedTime+"\",\"ePrice\":"+eP+",\"uPrice\":"+uP+",\"pPrice\":"+pP+"}]}";
+        myShared=myShared+newCrypto;
+
+        SharedPreferences.Editor editor;
+        editor=sharedPref.edit();
+        editor.putString("jsonString",myShared);
+        editor.commit();
+        System.exit(0);//EXITTT!@!!!@!@!@!@!@!@!@!@!@!@
+
+
+
+    }
 
    public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
+       /*
        SharedPreferences sharedPreferences;
        sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
        jsonString=sharedPreferences.getString("jsonString","{\n" +
@@ -74,9 +159,8 @@ public class myCrypto extends AppCompatActivity {
        {"crypto":"LSK","amount":5.0,"date":"23-12-2017","ePrice":20.0,"uPrice":21.0,"pPrice":80.0}
        ]
 }
-       */
+       /*
        //Pobranie shared pref Stringu z JSON'em
-       //String json_str = "{\"query\":\"Pizza\",\"locations\":[94043,90210]}";
        JSONObject jsonObject= new JSONObject(jsonString);
        JSONArray jsonArray=jsonObject.getJSONArray("cryptoList");
         for(int i=0;i<jsonArray.length();i++){
@@ -91,11 +175,17 @@ public class myCrypto extends AppCompatActivity {
             pPriceList.add(cryptoObj.optDouble("pPrice"));
             //////////////////////////////////////
         }
+        */
+       //TUTAJ BĘDIZE NOWE SHARED Z LICZBĄ!
+       SharedPreferences sharedPreferences;
+       sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
+       int count=sharedPreferences.getInt("count",7); //ZMIENIĆ NA 0!!!
+       for (int i=0;i<count;i++){
+        idList.add(i);
+       }
 
 
 
-      // String poka=cur+": "+String.valueOf(amm);
-       //Toast.makeText(getApplicationContext(),poka,Toast.LENGTH_SHORT).show();
 
    }
 
@@ -121,12 +211,11 @@ public class myCrypto extends AppCompatActivity {
        editor=sharedPreferences.edit();
        editor.putString("jsonString",savedString);
        editor.commit();
-       Log.d("JSON: ",jsonString);
+       //Log.d("JSON: ",jsonString);
    }
 
     public void buttonAct(View v){
-        sharedOff();
-        //System.exit(0);
+        System.exit(0);
     }
 
 
@@ -135,49 +224,55 @@ public class myCrypto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_crypto);
-        ListView resultListView= (ListView) findViewById(R.id.listCrypto);
-        // LISTY
-        /*
-        List<String> cryptoCurrency=new LinkedList<>();
-        List<Double> cryptoCurrency=new LinkedList<>();
-        cryptoCurrency.add("Andrzej");
-        cryptoCurrency.add("Kazek");
-        cryptoCurrency.add("Stefan");
-        */
-
-/*
-        HashMap<String, String> nameAddresses=new HashMap<>();
-        nameAddresses.put("BTC: ","0.001748");
-        nameAddresses.put("LSK: ","5.001748");
-        nameAddresses.put("ADA: ","58.001748");
-        nameAddresses.put("AsA: ","58.001748");
-        nameAddresses.put("AdA: ","58.001748");
-        nameAddresses.put("AfA: ","58.001748");
-        nameAddresses.put("AgA: ","58.001748");
-        nameAddresses.put("AhA: ","58.001748");
-        nameAddresses.put("AjA: ","58.001748");
-        nameAddresses.put("AkA: ","58.001748");
-        nameAddresses.put("AlA: ","58.001748");
-        nameAddresses.put("AtA: ","58.001748");
-        nameAddresses.put("ArA: ","58.001748");
-        nameAddresses.put("AeA: ","58.001748");
-        nameAddresses.put("AwA: ","58.001748");
-
-        List<HashMap<String,String>> listItems=new ArrayList<>();
-        SimpleAdapter adapter = new SimpleAdapter(this,listItems, R.layout.my_crypto_element,
-                new String[]{"First Line", "Second Line"},
-                new int []{R.id.currencyTAG, R.id.currencyAmount});
-        Iterator it =nameAddresses.entrySet().iterator();
-        while (it.hasNext()){
-            HashMap<String,String>resultMap=new HashMap<>();
-            Map.Entry pair = (Map.Entry)it.next();
-            resultMap.put("First Line", pair.getKey().toString());
-            resultMap.put("Second Line", pair.getValue().toString());
-            listItems.add(resultMap);
-        }
+        Button addGen=(Button)findViewById(R.id.addGeneral);
+        addGen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Context con=getApplicationContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(myCrypto.this);
+                View dialView=getLayoutInflater().inflate(R.layout.add_dialog,null);
+                final EditText addName=(EditText) dialView.findViewById(R.id.etName);
+                final EditText addAmount=(EditText) dialView.findViewById(R.id.etAmount);
+                addName.setText("BTC");
+                addAmount.setText(R.string.amount);
+                builder.setPositiveButton(R.string.addNew, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Editable crypTag=addName.getText();
+                        Editable crypAmo=addAmount.getText();
+                        String crypStr=crypTag.toString();
+                        crypStr=crypStr.toUpperCase();
+                        // Tu robie... Trzeba kontrole błędów po wprowadzeniu tekstu zamiast ilości krypto... Pozdro ide spać...
+                        try {
+                            double crypDou=Double.parseDouble(crypAmo.toString());
+                            addNewCrypto(crypStr,crypDou);
+                        }catch(NumberFormatException e){
+                            Toast.makeText(myCrypto.this,R.string.errorDouble,Toast.LENGTH_SHORT).show();
+                        }
 
 
-*/
+
+
+
+
+
+                        //Toast.makeText(myCrypto.this,crypStr+": "+crypDou,Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel,null);
+                builder.setView(dialView);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+            }
+        });
+
+
+
+
+
 
         try {
             shared();
@@ -186,54 +281,18 @@ public class myCrypto extends AppCompatActivity {
         }
 
 
-        //////////////////////////////////////
-        /*
-        idList.add(0);
-        nameList.add("BTC");
-        amountList.add(0.01748);
-        dateList.add("17-12-2017");
-        ePriceList.add(1000.0);
-        uPriceList.add(1000.0);
-        pPriceList.add(1000.0);
-
-        idList.add(1);
-        nameList.add("LSK");
-        amountList.add(5.0001568);
-        dateList.add("17-12-2017");
-        ePriceList.add(10.0);
-        uPriceList.add(10.0);
-        pPriceList.add(10.0);
-        */
-        ///////////////////////////////////////
-
-
-        List<HashMap<String,String>> listItems=new ArrayList<>();
-        SimpleAdapter adapter = new SimpleAdapter(this,listItems, R.layout.my_crypto_element,
-                new String[]{"Crypto", "Amount","Delete"},
-                new int []{R.id.currencyTAG, R.id.currencyAmount,R.id.buttonDelete});
-
-
-        for(int i=0;i<idList.size();i++){
-            HashMap<String,String>resultMap=new HashMap<>();
-            resultMap.put("Crypto", nameList.get(i));
-            resultMap.put("Amount",String.valueOf(amountList.get(i)));
-            resultMap.put("Delete",String.valueOf(idList.get(i)));
-            listItems.add(resultMap);
+        //MyCustomAdapter adapter  = new MyCustomAdapter(idList,nameList,amountList,this);
+        MyCustomAdapter adapter  = null;
+        try {
+            adapter = new MyCustomAdapter(idList,this);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        resultListView.setAdapter(adapter);
+        ListView lView = (ListView)findViewById(R.id.listCrypto);
+        lView.setAdapter(adapter);
+        //List<HashMap<String,String>> listItems=new ArrayList<>();
+        //SimpleAdapter adapter = new SimpleAdapter(this,listItems, R.layout.my_crypto_element,
+         //       new String[]{"Crypto", "Amount","Delete"},
 
-
-
-        //Iterator it =nameAddresses.entrySet().iterator();
-        //while (it.hasNext()){
-           // Map.Entry pair = (Map.Entry)it.next();
-           // resultMap.put("Crypto","CVC");
-            //resultMap.put("Amount","0.55");
-            //resultMap.put("Delete","del");
-       // HashMap<String,String>resultMap=new HashMap<>();
-        //resultMap.put("Crypto","CVC");
-        //resultMap.put("Amount","0.55");
-        //listItems.add(resultMap);
-        //}
     }
 }

@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
     LinkedList<Integer> idList=new LinkedList<>();
     LinkedList<String>nameList=new LinkedList<>();
     LinkedList<Double>amountList=new LinkedList<>();
-    LinkedList<String>dateList=new LinkedList<>();
-    LinkedList<Double>ePriceList=new LinkedList<>();
-    LinkedList<Double>uPriceList=new LinkedList<>();
-    LinkedList<Double>pPriceList=new LinkedList<>();
+    //LinkedList<String>dateList=new LinkedList<>();
+    //LinkedList<Double>ePriceList=new LinkedList<>();
+    //LinkedList<Double>uPriceList=new LinkedList<>();
+    //LinkedList<Double>pPriceList=new LinkedList<>();
 
     public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
         SharedPreferences sharedPreferences;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
                 "       ]\n" +
                 "}");
-
+        Log.d("JSONstring: ",jsonString);
         if(jsonString=="EMPTY"){
         Log.d("SHARED: ","EMPTY");
         }else {
@@ -72,15 +72,18 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject cryptoObj = jsonArray.getJSONObject(i);
                 /////////////////////////////////////
                 idList.add(i);
+
                 nameList.add(cryptoObj.optString("crypto"));
+                //Log.d("Crypto name: ", cryptoObj.optString("crypto"));
                 amountList.add(cryptoObj.optDouble("amount"));
-                dateList.add(cryptoObj.optString("date"));
-                ePriceList.add(cryptoObj.optDouble("ePrice"));
-                uPriceList.add(cryptoObj.optDouble("uPrice"));
-                pPriceList.add(cryptoObj.optDouble("pPrice"));
+                //dateList.add(cryptoObj.optString("date"));
+                //ePriceList.add(cryptoObj.optDouble("ePrice"));
+                //uPriceList.add(cryptoObj.optDouble("uPrice"));
+                //pPriceList.add(cryptoObj.optDouble("pPrice"));
                 //////////////////////////////////////
             }
             Log.d("SHARED: ","OK");
+
         }
     }
     public void settingsss(View view){
@@ -126,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             url+=",";
         }
         url+="&tsyms=EUR,USD,PLN";
+        Log.d("URL: ",url);
         final RequestQueue queue = Volley.newRequestQueue(this);
         final TextView ammount=(TextView) findViewById(R.id.ammount);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -133,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response){
                         JSONObject jsonObj;
+
+                        Log.d("Response: ",response);
                         try {
                             jsonObj = new JSONObject(response);
                             for(int i=0;i<jsonObj.length();i++){
@@ -144,12 +150,17 @@ public class MainActivity extends AppCompatActivity {
                                 myMoneyPLN+=kPLN*tempAmount;
                                 myMoneyUSD+=kUSD*tempAmount;
                                 myMoneyEUR+=kEUR*tempAmount;
+
                             }
+                            Toast.makeText(getApplicationContext(),"REFRESH!",Toast.LENGTH_SHORT).show();
                             setPrice();
                             timerSet();
                         } catch (JSONException e) {
                             ammount.setText("Error");
                             e.printStackTrace();
+                        }catch (IndexOutOfBoundsException e){
+                            Log.d("I wyjebało","tak");
+                            Toast.makeText(MainActivity.this,R.string.noData,Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener(){
@@ -163,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void refresh(View view){
         checkPrice();
-        Toast.makeText(getApplicationContext(),"REFRESH!",Toast.LENGTH_SHORT).show();
+
     }
 
 
