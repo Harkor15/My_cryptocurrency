@@ -43,17 +43,7 @@ public class MyCustomAdapter  extends BaseAdapter implements ListAdapter{
 
         SharedPreferences sharedPreferences;
         sharedPreferences=context.getSharedPreferences("harkor.myCrypto",Context.MODE_PRIVATE);
-        jsonString=sharedPreferences.getString("jsonString","{\n" +
-                "       \"cryptoList\":[\n" +
-                "       {\"crypto\":\"BTC\",\"amount\":0.01448812,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"SAFEX\",\"amount\":164.67,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"IOTA\",\"amount\":0.57,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"ADA\",\"amount\":58.76,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"XVG\",\"amount\":110.3,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"BCH\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
-                "       ]\n" +
-                "}");
+        jsonString=sharedPreferences.getString("jsonString","{\"cryptoList\":[]}");
         JSONObject jsonObject= new JSONObject(jsonString);
         JSONArray jsonArray=jsonObject.getJSONArray("cryptoList");
         for(int i=0;i<jsonArray.length();i++){
@@ -98,14 +88,6 @@ public class MyCustomAdapter  extends BaseAdapter implements ListAdapter{
         System.exit(0);
 
     }
-
-
-
-
-
-
-
-
 
     //public MyCustomAdapter(LinkedList<Integer>idList,LinkedList<String>nameList,LinkedList<Double>amountList,Context context){
     public MyCustomAdapter(LinkedList<Integer>idList,Context context) throws JSONException {

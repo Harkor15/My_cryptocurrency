@@ -16,15 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Crypto short name" />
+        android:hint="@string/CryptoShortName"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Amount" />
+        android:hint="@string/amount"
+        android:inputType="textPersonName|numberDecimal" />
 
 </LinearLayout>
