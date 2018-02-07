@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +33,8 @@ import java.util.LinkedList;
 
 
 public class myCrypto extends AppCompatActivity {
-    String jsonString;
-    Context context;
+    //String jsonString;
+    //Context context;
     LinkedList<Integer> idList = new LinkedList<>();
     LinkedList<String> nameList = new LinkedList<>();
     LinkedList<Double> amountList = new LinkedList<>();
@@ -179,9 +180,19 @@ public class myCrypto extends AppCompatActivity {
        //TUTAJ BĘDIZE NOWE SHARED Z LICZBĄ!
        SharedPreferences sharedPreferences;
        sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
-       int count=sharedPreferences.getInt("count",7); //ZMIENIĆ NA 0!!!
-       for (int i=0;i<count;i++){
-        idList.add(i);
+       String jsonString=sharedPreferences.getString("jsonString","{\"cryptoList\":[]}");
+       if(jsonString=="{\"cryptoList\":[]}"){
+           Log.d("SHARED","EMPTY");
+           Toast.makeText(myCrypto.this,"Nie ma krypto!",Toast.LENGTH_SHORT).show();
+       }else {
+           JSONObject jsonObject = new JSONObject(jsonString);
+           JSONArray jsonArray = jsonObject.getJSONArray("cryptoList");
+           for (int i = 0; i < jsonArray.length(); i++) {
+               //JSONObject cryptoObj = jsonArray.getJSONObject(i);
+               idList.add(i);
+           }
+           Log.d("SHARED: ","OK");
+
        }
 
 
@@ -228,13 +239,15 @@ public class myCrypto extends AppCompatActivity {
         addGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Context con=getApplicationContext();
+                //final Context con=getApplicationContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(myCrypto.this);
                 View dialView=getLayoutInflater().inflate(R.layout.add_dialog,null);
                 final EditText addName=(EditText) dialView.findViewById(R.id.etName);
                 final EditText addAmount=(EditText) dialView.findViewById(R.id.etAmount);
-                addName.setText("BTC");
-                addAmount.setText(R.string.amount);
+                //addName.setHint("BTC");
+                //addName.setInputType(InputType.TYPE_CLASS_TEXT);
+                //addAmount.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                //addAmount.setHint(R.string.amount);
                 builder.setPositiveButton(R.string.addNew, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

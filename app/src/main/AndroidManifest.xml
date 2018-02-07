@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".settings" />
-        <activity android:name=".myCrypto"></activity>
+        <activity android:name=".myCrypto" />
+        <activity android:name=".AdvancedActivity"></activity>
     </application>
 
 </manifest>

@@ -48,34 +48,53 @@ public class MainActivity extends AppCompatActivity {
     //LinkedList<Double>uPriceList=new LinkedList<>();
     //LinkedList<Double>pPriceList=new LinkedList<>();
 
+    public void sharedAdd(String tag,Double amo){
+        int len=nameList.size();
+        if(len==0){
+            idList.add(0);
+            nameList.add(tag);
+            amountList.add(amo);
+        }else{
+            int poz=sharedAdd2(tag);
+            if(poz<0){
+                idList.add(len);
+                nameList.add(tag);
+                amountList.add(amo);
+            }else{
+                Double tmp=amountList.get(poz);
+                tmp+=amo;
+                amountList.set(poz,tmp);
+            }
+        }
+    }
+    public int sharedAdd2(String tag){
+        int len=nameList.size();
+        for(int i=0;i<len;i++){
+            if(nameList.get(i).equals(tag)){
+            return i;
+            }
+        }
+        return -1;
+    }
     public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
         SharedPreferences sharedPreferences;
         sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
-        jsonString=sharedPreferences.getString("jsonString","{\n" +
-                "       \"cryptoList\":[\n" +
-                "       {\"crypto\":\"BTC\",\"amount\":0.01448812,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"SAFEX\",\"amount\":164.67,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"IOTA\",\"amount\":0.57,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"ADA\",\"amount\":58.76,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"XVG\",\"amount\":110.3,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"BCH\",\"amount\":0.00409767,\"date\":\"23-12-2017\",\"ePrice\":15000.0,\"uPrice\":16000.0,\"pPrice\":60000.0},\n" +
-                "       {\"crypto\":\"LSK\",\"amount\":5.0,\"date\":\"23-12-2017\",\"ePrice\":20.0,\"uPrice\":21.0,\"pPrice\":80.0}\n" +
-                "       ]\n" +
-                "}");
+        jsonString=sharedPreferences.getString("jsonString","{\"cryptoList\":[]}");
         Log.d("JSONstring: ",jsonString);
-        if(jsonString=="EMPTY"){
-        Log.d("SHARED: ","EMPTY");
+        if(jsonString=="{\"cryptoList\":[]}"){
+            Log.d("SHARED","EMPTY");
+            Toast.makeText(MainActivity.this,"Nie ma krypto!",Toast.LENGTH_SHORT).show();
         }else {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray jsonArray = jsonObject.getJSONArray("cryptoList");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject cryptoObj = jsonArray.getJSONObject(i);
                 /////////////////////////////////////
-                idList.add(i);
-
-                nameList.add(cryptoObj.optString("crypto"));
+                sharedAdd(cryptoObj.optString("crypto"),cryptoObj.optDouble("amount"));
+                //idList.add(i);
+                //nameList.add(cryptoObj.optString("crypto"));
                 //Log.d("Crypto name: ", cryptoObj.optString("crypto"));
-                amountList.add(cryptoObj.optDouble("amount"));
+                //amountList.add(cryptoObj.optDouble("amount"));
                 //dateList.add(cryptoObj.optString("date"));
                 //ePriceList.add(cryptoObj.optDouble("ePrice"));
                 //uPriceList.add(cryptoObj.optDouble("uPrice"));
@@ -176,7 +195,10 @@ public class MainActivity extends AppCompatActivity {
         checkPrice();
 
     }
-
+    public void advancedAct(View view){
+        Intent advancedAct=new Intent(this,AdvancedActivity.class);
+        startActivity(advancedAct);
+    }
 
 
 
