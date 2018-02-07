@@ -12,6 +12,7 @@ public class AdvancedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced);
         Spinner spinner=(Spinner)findViewById(R.id.spinner);
+        SpinnerAdapter spinnerAdapter;
 
 
 
