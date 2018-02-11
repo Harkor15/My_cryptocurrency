@@ -1,4 +1,4 @@
-# My_cryptocurrency
+# My Cryptocurrency
 My appliction for cryptocurrecny traders.
 ### What this app do?
 With this app checking value of your cryptocurrency's is very simple!
