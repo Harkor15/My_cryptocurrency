@@ -22,4 +22,14 @@
     <string name="errorJSON">Coś posżło nie tak z JSON\'em!</string>
     <string name="noData">Dodaj swoje kryptowaluty</string>
     <string name="CryptoShortName">Skrócona nazwa (BTC)</string>
+    <string name="chooseCrypto">Wybierz kryptowalutę</string>
+    <string name="clickToSelect">Kliknij i wybierz kryptowalutę</string>
+    <string name="add_time">Czas dodania: </string>
+    <string name="add_price">Cena dodania:</string>
+    <string name="add_value">Wartość dodania:</string>
+    <string name="actual_price">Aktualna cena:</string>
+    <string name="actual_value">Aktualna wartość</string>
+    <string name="result">Bilans:</string>
+    <string name="result_percent">Bilans(%):</string>
+
 </resources>

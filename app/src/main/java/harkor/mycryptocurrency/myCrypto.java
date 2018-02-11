@@ -96,11 +96,6 @@ public class myCrypto extends AppCompatActivity {
 
         //odśwież stronkę... ;) i jak ogarniesz jak odświerzać to dodaj też do usuwania.. ;)
     }
-
-
-
-
-
     public void addNewFinally(String tag,Double amount,Double eP,Double uP,Double pP){
         //Toast.makeText(myCrypto.this,tag+": "+amount+" "+eP+" €, "+uP+"$, "+pP+" zł",Toast.LENGTH_SHORT).show();
 
@@ -132,8 +127,7 @@ public class myCrypto extends AppCompatActivity {
 
 
     }
-
-   public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
+    public void shared() throws JSONException {  //GET DATA FROM SHARED PREFERENCES
        /*
        SharedPreferences sharedPreferences;
        sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
@@ -199,8 +193,7 @@ public class myCrypto extends AppCompatActivity {
 
 
    }
-
-   public void sharedOff(){ //Export list to shared pref
+    public void sharedOff(){ //Export list to shared pref
        SharedPreferences sharedPreferences;
        sharedPreferences=getSharedPreferences("harkor.myCrypto", Context.MODE_PRIVATE);
        String savedString="{\"cryptoList\":[";
@@ -224,7 +217,6 @@ public class myCrypto extends AppCompatActivity {
        editor.commit();
        //Log.d("JSON: ",jsonString);
    }
-
     public void buttonAct(View v){
         System.exit(0);
     }

@@ -196,8 +196,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void advancedAct(View view){
-        Intent advancedAct=new Intent(this,AdvancedActivity.class);
-        startActivity(advancedAct);
+        Intent advancedActi=new Intent(this,AdvancedActivity.class);
+        startActivity(advancedActi);
+    }
+    public void DonAct(View view){
+        Intent donActi=new Intent(this,Don.class);
+        startActivity(donActi);
     }
 
 

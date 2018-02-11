@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".settings" />
         <activity android:name=".myCrypto" />
-        <activity android:name=".AdvancedActivity"></activity>
+        <activity android:name=".AdvancedActivity" />
+        <activity android:name=".Don"></activity>
     </application>
 
 </manifest>
