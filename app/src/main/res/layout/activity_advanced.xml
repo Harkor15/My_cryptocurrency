@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -28,7 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView18"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/result_percent"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -56,7 +56,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView16"
         app:layout_constraintRight_toRightOf="parent"
@@ -71,7 +71,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/result"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -84,7 +84,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView14"
         app:layout_constraintRight_toRightOf="parent"
@@ -99,7 +99,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/actual_value"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -112,7 +112,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView12"
         app:layout_constraintRight_toRightOf="parent"
@@ -124,12 +124,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/actual_price"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/a2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/b4"
@@ -140,7 +140,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView10"
         app:layout_constraintRight_toRightOf="parent"
@@ -155,7 +155,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/add_value"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a2" />
 
@@ -168,7 +168,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView8"
         app:layout_constraintRight_toRightOf="parent"
@@ -200,7 +200,7 @@
         android:layout_marginTop="24dp"
         android:layout_weight="1"
         android:text="@string/add_time"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectCrp" />
 
@@ -213,7 +213,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/a1"
         app:layout_constraintRight_toRightOf="parent"
@@ -228,7 +228,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="@string/add_price"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a1" />
 
@@ -241,7 +241,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="---"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/a2"
         app:layout_constraintRight_toRightOf="parent"

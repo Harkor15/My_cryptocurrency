@@ -79,7 +79,11 @@ public class AdvancedActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // TODO: user specific action
+
+
+                        Button selectCr=(Button)findViewById(R.id.selectCrp);
+                        selectCr.setText(nameList.get(which)+": "+amountList.get(which));
+
                         TextView b1=(TextView)findViewById(R.id.b1);
                         TextView b2=(TextView)findViewById(R.id.b2);
                         TextView b3=(TextView)findViewById(R.id.b3);
@@ -107,7 +111,7 @@ public class AdvancedActivity extends AppCompatActivity {
                         }else{
                             b3.setText(((pPriceList.get(which))*amountList.get(which)+"zł"));
                         }
-
+                        //TODO: OTHER TV's
 
                         dialog.dismiss();
                     }
