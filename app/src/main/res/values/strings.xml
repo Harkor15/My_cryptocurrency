@@ -31,5 +31,7 @@
     <string name="actual_value">Aktualna wartość</string>
     <string name="result">Bilans:</string>
     <string name="result_percent">Bilans(%):</string>
+    <string name="btcPrice">Cena w BTC:</string>
+    <string name="btcValue">Wartość w BTC:</string>
 
 </resources>
