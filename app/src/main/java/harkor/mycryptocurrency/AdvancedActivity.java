@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static harkor.mycryptocurrency.R.id.b2;
 import static harkor.mycryptocurrency.R.id.b3;
 
 public class AdvancedActivity extends AppCompatActivity {
@@ -119,6 +120,7 @@ public class AdvancedActivity extends AppCompatActivity {
                     b5.setText(currencyTag(decim.format(actValue)));
                     TextView b6=(TextView)findViewById(R.id.b6);
                     double result=actPrice-getBuyPrice(id);
+                    result*=amountList.get(id);
                     b6.setText(currencyTag(decim.format(result)));
                     TextView b7=(TextView)findViewById(R.id.b7);
                     if(result>=0){
@@ -209,7 +211,9 @@ public class AdvancedActivity extends AppCompatActivity {
                     }
                 }).create().show();
     }
-
+    public void exit(View v){
+        System.exit(0);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
