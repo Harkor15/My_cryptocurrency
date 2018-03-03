@@ -3,7 +3,9 @@
     <color name="colorPrimary">#71d632</color>
     <color name="buttonColor">#c2c4c2</color>
     <color name="colorPrimaryDark">#002f01</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="background_material_light">#089700</color>
+    <color name="legacy_primary">#ff9800</color>
+    <color name="legacy_primary_dark">#000000</color>
 
 </resources>

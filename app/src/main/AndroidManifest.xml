@@ -20,7 +20,7 @@
         <activity android:name=".settings" />
         <activity android:name=".myCrypto" />
         <activity android:name=".AdvancedActivity" />
-        <activity android:name=".Don"></activity>
+        <activity android:name=".Don" />
     </application>
 
 </manifest>
