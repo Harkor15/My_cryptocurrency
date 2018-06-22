@@ -70,9 +70,6 @@ public class myCrypto extends AppCompatActivity {
                                 //Jest źle
                                 Toast.makeText(myCrypto.this,R.string.checkTag,Toast.LENGTH_SHORT).show();
                             }
-                            //Biore się za rozkodowanie JSONA i wpisanie go do shared ale to jutro bo dzisiaj już do spania... ^_^
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("WCZYTANO NOWE KRYPTO: ","NIE!");
